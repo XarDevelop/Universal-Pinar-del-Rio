@@ -1,0 +1,21 @@
+.content-add{
+    margin-left: 50%;
+    margin-bottom: 20px;
+    padding: 1%;
+    border-radius: 3px;
+    border: none;
+    background:linear-gradient(135deg, gray);
+    color: rgb(26, 25, 25);
+    transition: all 0.3s ease;
+}
+
+.form-field{
+    padding: 10px;
+}
+
+select{
+    width: 100px;
+}
+.content-add:hover{
+    color: white;
+}

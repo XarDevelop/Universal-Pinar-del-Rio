@@ -1,0 +1,2 @@
+no se llama con un fetch ,se llama como un objeto js
+import userData from './users.json';

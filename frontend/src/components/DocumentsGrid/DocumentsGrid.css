@@ -1,0 +1,68 @@
+.documents-grid {
+  display: grid;
+  /* ✅ Responsivo: tantas columnas como quepan de 250px mínimo */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 20px;
+  /* ✅ Asegura que ocupe todo el ancho disponible */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Responsive: en pantallas medianas, columnas más pequeñas */
+@media (max-width: 1200px) {
+  .documents-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+}
+
+/* ✅ Responsive: en tablets */
+@media (max-width: 768px) {
+  .documents-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* ✅ Responsive: en móviles, 2 columnas o 1 */
+@media (max-width: 480px) {
+  .documents-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
+/* ✅ Móvil pequeño: 1 columna */
+@media (max-width: 320px) {
+  .documents-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.documents-empty {
+  text-align: center;
+  padding: 10px;
+  color: #64748b;
+  /* ✅ Centrar en la pantalla */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  grid-column: 1 / -1; /* ✅ Ocupa todas las columnas si está en grid */
+}
+
+.empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.documents-empty p {
+  margin: 0;
+  font-size: 16px;
+}

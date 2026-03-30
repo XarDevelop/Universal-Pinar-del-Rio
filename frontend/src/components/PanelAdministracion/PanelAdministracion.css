@@ -1,0 +1,35 @@
+.admin-section{
+    margin: 20px 15px;
+    background-color:rgb(241, 241, 241);
+    border: 3px solid rgb(218, 218, 218);
+    border-radius: 20px;
+    padding: 30px;
+    h2{
+        text-align: center;
+        margin-bottom: 10px;
+        color: rgb(75, 74, 74);
+    }
+
+    .admin-button{
+        margin-bottom: 10px;
+        width: 200px;
+        height: 28px;
+        background: linear-gradient(135deg, #2263db 0%, #0a5ce9 100%);
+        color: white;
+        font-size: 15px;
+        border: none;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+    }
+
+}
+
+.center-section{
+    display: grid;
+    justify-content: center;
+}
+
+.admin-button:hover{
+    background: #05317e;
+    }
+

@@ -1,0 +1,17 @@
+.papelera{
+        margin-bottom: 10px;
+        width: 200px;
+        padding: 5px 51px;
+        height: 28px;
+        background: linear-gradient(135deg, #2263db 0%, #0a5ce9 100%);
+        color: white;
+        font-size: 15px;
+        border: none;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+}
+
+.papelera:hover{
+    background: #05317e;
+}
