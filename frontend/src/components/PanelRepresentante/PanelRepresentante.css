@@ -22,7 +22,7 @@
 
 .btn-agregar {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #2263db 0%, #0a5ce9 100%);;
+  background:rgb(0, 141, 147);
   color: white;
   border: none;
   border-radius: 6px;
@@ -43,7 +43,7 @@
 
 .btn-desechar {
   padding: 12px 24px;
-  background-color: #dc3545;
+  background-color: rgb(131,130,129);
   color: white;
   border: none;
   border-radius: 6px;
@@ -57,7 +57,7 @@
 }
 
 .btn-desechar:hover {
-  background-color: #c82333;
+  background-color: rgb(129, 170, 140);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }

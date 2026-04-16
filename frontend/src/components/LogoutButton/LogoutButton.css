@@ -5,7 +5,7 @@
   gap: 0.5rem;
   margin: 1rem 1.5rem;
   padding: 0.75rem;
-  background: #dc3545;
+  background: rgb(131, 130, 129);
   color: white;
   border: none;
   border-radius: 8px;
@@ -15,7 +15,7 @@
 }
 
 .logout-btn:hover {
-  background: #c82333;
+  background: rgb(129, 170, 140);
 }
 
 .logout-btn svg {
