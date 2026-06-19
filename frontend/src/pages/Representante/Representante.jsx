@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { socket } from '../../socket'; // 🔥 IMPORTAR SOCKET
 import HeroSection from '../../components/HeroSection/HeroSection';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SearchModal from '../../components/SearchModal/SearchModal';
@@ -26,7 +27,7 @@ const Representante = () => {
   const [modalAgregarOpen, setModalAgregarOpen] = useState(false);
   const [modalDesecharOpen, setModalDesecharOpen] = useState(false);
   
-  // ✅ Estados para búsqueda con nuevo patrón
+  // Estados para búsqueda con nuevo patrón
   const [mostrarModalBusqueda, setMostrarModalBusqueda] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   
@@ -87,6 +88,30 @@ const Representante = () => {
     cargarSecciones();
   }, [isReady, userData]);
 
+  // 🔥 FUNCIÓN REUTILIZABLE PARA CARGAR DOCUMENTOS
+  const cargarDocumentos = async (idSeccion) => {
+    if (!idSeccion) return;
+    
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`/api/documentos/seccion/${idSeccion}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      const docs = Array.isArray(response.data) ? response.data : [];
+      setDocumentos(docs);
+      setDocumentosFiltrados(docs);
+      setError(null);
+    } catch (err) {
+      console.error('Error cargando documentos:', err);
+      setDocumentos([]);
+      setDocumentosFiltrados([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!seccionActiva) {
       setDocumentos([]);
@@ -94,31 +119,56 @@ const Representante = () => {
       return;
     }
     
-    const cargarDocumentos = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`/api/documentos/seccion/${seccionActiva}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        const docs = Array.isArray(response.data) ? response.data : [];
-        setDocumentos(docs);
-        setDocumentosFiltrados(docs);
-        setError(null);
-      } catch (err) {
-        console.error('Error cargando documentos:', err);
-        setDocumentos([]);
-        setDocumentosFiltrados([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    cargarDocumentos();
+    cargarDocumentos(seccionActiva);
   }, [seccionActiva]);
 
-  // ✅ Búsqueda ahora se hace DENTRO del modal
+  // 🔥 SOCKET.IO - ESCUCHAR EVENTOS EN TIEMPO REAL
+  useEffect(() => {
+    if (!seccionActiva) return;
+
+    // Cuando OTRO usuario crea un documento en MI sección
+    socket.on('documento:creado', (nuevoDoc) => {
+      console.log('📄 Documento creado por otro usuario:', nuevoDoc);
+      
+      // Solo actualizar si es de mi sección activa
+      if (nuevoDoc.id_seccion === seccionActiva) {
+        setDocumentos(prev => {
+          // Evitar duplicados
+          const existe = prev.some(d => d.id_documento === nuevoDoc.id_documento);
+          if (existe) return prev;
+          
+          const nuevos = [nuevoDoc, ...prev];
+          // Actualizar también los filtrados si no hay búsqueda activa
+          if (busqueda.trim() === '') {
+            setDocumentosFiltrados(nuevos);
+          }
+          return nuevos;
+        });
+      }
+    });
+
+    // Cuando OTRO usuario elimina un documento de MI sección
+    socket.on('documento:eliminado', (data) => {
+      console.log('🗑️ Documento eliminado:', data);
+      
+      if (data.id_seccion === seccionActiva) {
+        setDocumentos(prev => {
+          const filtrados = prev.filter(d => d.id_documento !== parseInt(data.id_documento));
+          if (busqueda.trim() === '') {
+            setDocumentosFiltrados(filtrados);
+          }
+          return filtrados;
+        });
+      }
+    });
+
+    return () => {
+      socket.off('documento:creado');
+      socket.off('documento:eliminado');
+    };
+  }, [seccionActiva, busqueda]);
+
+  // Búsqueda ahora se hace DENTRO del modal
   const handleBusquedaModal = (valor) => {
     setBusqueda(valor);
     
@@ -170,14 +220,11 @@ const Representante = () => {
         }
       });
       
+      // 🔥 YA NO HACE FALTA RECARGAR MANUALMENTE
+      // Socket.io actualizará automáticamente a todos los usuarios
+      // Pero recargamos por si acaso el socket falla
       if (seccionActiva === userData.id_seccion) {
-        const response = await axios.get(`/api/documentos/seccion/${seccionActiva}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        const docs = Array.isArray(response.data) ? response.data : [];
-        setDocumentos(docs);
-        setDocumentosFiltrados(docs);
+        await cargarDocumentos(seccionActiva);
       }
       
       setModalAgregarOpen(false);
@@ -206,13 +253,10 @@ const Representante = () => {
         }
       });
       
+      // 🔥 YA NO HACE FALTA RECARGAR MANUALMENTE
+      // Socket.io actualizará automáticamente
       if (seccionActiva === userData.id_seccion) {
-        const response = await axios.get(`/api/documentos/seccion/${seccionActiva}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const docs = Array.isArray(response.data) ? response.data : [];
-        setDocumentos(docs);
-        setDocumentosFiltrados(docs);
+        await cargarDocumentos(seccionActiva);
       }
       
       setModalDesecharOpen(false);
@@ -230,6 +274,7 @@ const Representante = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    socket.disconnect(); // 🔥 DESCONECTAR SOCKET AL CERRAR SESIÓN
     navigate('/');
   };
 
@@ -266,7 +311,6 @@ const Representante = () => {
         </div>
       )}
 
-      {/* ✅ SearchBar ahora es un botón que abre el modal */}
       <SearchBar 
         onClick={() => setMostrarModalBusqueda(true)}
         placeholder="Buscar documento..."
@@ -292,7 +336,6 @@ const Representante = () => {
         )}
       </div>
 
-      {/* ✅ Modal de búsqueda con input interno */}
       <SearchModal 
         isOpen={mostrarModalBusqueda}
         onClose={() => setMostrarModalBusqueda(false)}

@@ -6,7 +6,7 @@ const HeroSection = () => {
       <div className="hero-content">
         <div className="logo-container">
           <img 
-            src="/frontend/src/assets/" 
+            src="/logo_empresa.png" 
             alt="Logo Empresa" 
             className="logo-img"
             onError={(e) => {
@@ -15,7 +15,8 @@ const HeroSection = () => {
             }}
           />
           <div className="logo-placeholder" style={{display: 'none'}}>
-            <img src="src/assets/logo_empresa.png" alt="" />
+            {/* Misma ruta corregida */}
+            <img src="/logo_empresa.png" alt="" />
           </div>
         </div>
         <div className="hero-text">

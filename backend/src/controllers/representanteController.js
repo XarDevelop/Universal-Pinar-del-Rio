@@ -37,14 +37,12 @@ const uploadDocumento = async (req, res) => {
         if (hasDocumento) {
             // Procesar base64
             documentoData = documento.replace(/^data:.*;base64,/, '');
-            // Usar nombre_archivo del frontend o default
             nombre_documento = nombre_archivo || 'documento_subido';
         } else {
             // Procesar ruta de archivo
             try {
                 const fileBuffer = await fs.readFile(filePath);
                 documentoData = fileBuffer.toString('base64');
-                // Extraer nombre del archivo de la ruta
                 nombre_documento = path.basename(filePath);
             } catch (fileError) {
                 return res.status(400).json({ 
@@ -53,14 +51,7 @@ const uploadDocumento = async (req, res) => {
             }
         }
 
-        // ✅ DEBUG: Ver datos antes de insertar
-        console.log('=== DATOS A INSERTAR ===');
-        console.log('userSection (id_seccion):', userSection);
-        console.log('nombre_documento:', nombre_documento);
-        console.log('tamano documentoData:', documentoData.length);
-        console.log('========================');
-
-        // Insertar con la sección del representante y nombre extraído del archivo
+        // Insertar con la sección del representante
         const query = `
             INSERT INTO documentos (id_seccion, nombre_documento, documento)
             VALUES ($1, $2, $3)
@@ -70,16 +61,21 @@ const uploadDocumento = async (req, res) => {
         const values = [userSection, nombre_documento, documentoData];
         const result = await pool.query(query, values);
 
-        // ✅ DEBUG: Ver resultado de la inserción
-        console.log('=== Documento insertado ===');
-        console.log('ID:', result.rows[0].id_documento);
-        console.log('Nombre:', result.rows[0].nombre_documento);
-        console.log('Sección:', result.rows[0].id_seccion);
-        console.log('===========================');
+        const nuevoDocumento = result.rows[0];
+
+        // 🔥 EMITIR EVENTO SOCKET.IO A TODOS LOS CLIENTES
+        if (req.io) {
+            req.io.emit('documento:creado', {
+                id_documento: nuevoDocumento.id_documento,
+                id_seccion: nuevoDocumento.id_seccion,
+                nombre_documento: nuevoDocumento.nombre_documento,
+                fecha_creacion: nuevoDocumento.fecha_creacion
+            });
+        }
 
         res.status(201).json({
             message: 'Documento subido exitosamente',
-            documento: result.rows[0]
+            documento: nuevoDocumento
         });
 
     } catch (error) {
@@ -88,7 +84,7 @@ const uploadDocumento = async (req, res) => {
     }
 };
 
-// Desechar documento (sin cambios)
+// Desechar documento
 const desecharDocumento = async (req, res) => {
     const client = await pool.connect();
     
@@ -135,6 +131,14 @@ const desecharDocumento = async (req, res) => {
         await client.query(deleteQuery, [id_documento]);
 
         await client.query('COMMIT');
+
+        // 🔥 EMITIR EVENTO SOCKET.IO
+        if (req.io) {
+            req.io.emit('documento:eliminado', {
+                id_documento: documento.id_documento,
+                id_seccion: documento.id_seccion
+            });
+        }
 
         res.json({
             message: 'Documento movido a la papelera exitosamente',

@@ -1,21 +1,249 @@
-.content-add{
-    margin-left: 50%;
-    margin-bottom: 20px;
-    padding: 1%;
-    border-radius: 3px;
+/* ============================================
+   MODAL AGREGAR USUARIO - ESTILOS COMPLETOS
+   ============================================ */
+
+/* Overlay del modal */
+.search-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Contenedor del modal */
+.search-modal {
+    background: #1a1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header del modal */
+.search-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.search-modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Botón cerrar */
+.close-modal {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
     border: none;
-    background:linear-gradient(135deg, gray);
-    color: rgb(26, 25, 25);
+    border-radius: 8px;
+    color: #a0a0b0;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    background: rgba(224, 32, 16, 0.2);
+    color: #ff3b2e;
+    transform: rotate(90deg);
+}
+
+/* Contenido del modal */
+.search-modal > div:nth-child(2) {
+    padding: 1.5rem;
+}
+
+/* Mensaje de error */
+.error-message {
+    background: rgba(224, 32, 16, 0.15);
+    border: 1px solid rgba(224, 32, 16, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: #ff6b6b !important;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   FORMULARIO
+   ============================================ */
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-field label {
+    color: #a0a0b0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #e02010;
+    box-shadow: 0 0 0 3px rgba(224, 32, 16, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-field input::placeholder {
+    color: #6b6b7b;
+}
+
+/* Select personalizado */
+.form-field select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0a0b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.form-field select option {
+    background: #1a1a2e;
+    color: #ffffff;
+}
+
+/* ============================================
+   BOTÓN AGREGAR (CORREGIDO)
+   ============================================ */
+
+.content-add {
+    width: 100%;
+    margin: 1.5rem 0 0 0; /* Corregido: centrado, no desplazado */
+    padding: 0.875rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #e02010 0%, #ff6b00 100%);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(224, 32, 16, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.content-add:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(224, 32, 16, 0.4);
+    filter: brightness(1.1);
+}
+
+.content-add:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.content-add:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #666 0%, #888 100%);
+}
+
+/* Spinner de carga (opcional, si quieres agregarlo) */
+.content-add::after {
+    content: '';
+    width: 0;
+    height: 0;
     transition: all 0.3s ease;
 }
 
-.form-field{
-    padding: 10px;
+/* ============================================
+   SCROLLBAR DEL MODAL
+   ============================================ */
+
+.search-modal::-webkit-scrollbar {
+    width: 6px;
 }
 
-select{
-    width: 100px;
+.search-modal::-webkit-scrollbar-track {
+    background: transparent;
 }
-.content-add:hover{
-    color: white;
+
+.search-modal::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.search-modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .search-modal {
+        max-height: 95vh;
+        border-radius: 12px;
+    }
+    
+    .search-modal-header {
+        padding: 1rem;
+    }
+    
+    .search-modal > div:nth-child(2) {
+        padding: 1rem;
+    }
+    
+    .form-field input,
+    .form-field select {
+        padding: 0.625rem 0.875rem;
+    }
 }

@@ -58,7 +58,7 @@ const Login = () => {
       <div className="login-card">
         <div className="logo-container">
           <img 
-            src="src/assets/logo_empresa.png" 
+            src="/logo_empresa.png" 
             alt="Logo Empresa" 
             className="company-logo"
           />
