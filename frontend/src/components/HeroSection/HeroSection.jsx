@@ -15,7 +15,7 @@ const HeroSection = () => {
             }}
           />
           <div className="logo-placeholder" style={{display: 'none'}}>
-            <img src="/src/assets/logo_empresa.png" alt="" />
+            <img src="src/assets/logo_empresa.png" alt="" />
           </div>
         </div>
         <div className="hero-text">
