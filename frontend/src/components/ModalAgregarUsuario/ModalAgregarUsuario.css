@@ -47,6 +47,7 @@
 
 /* Header del modal */
 .search-modal-header {
+    color:rgb(0, 141, 147);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,7 +59,7 @@
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #ffffff;
+    color: rgb(0, 141, 147);
 }
 
 /* Botón cerrar */
@@ -80,7 +81,7 @@
 
 .close-modal:hover {
     background: rgba(224, 32, 16, 0.2);
-    color: #ff3b2e;
+    color: rgb(0, 141, 147);
     transform: rotate(90deg);
 }
 
@@ -122,7 +123,7 @@
     width: 100%;
     padding: 0.75rem 1rem;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(53, 53, 53, 0.557);
     border-radius: 10px;
     color: #ffffff;
     font-size: 0.95rem;
@@ -132,8 +133,8 @@
 
 .form-field input:focus,
 .form-field select:focus {
-    border-color: #e02010;
-    box-shadow: 0 0 0 3px rgba(224, 32, 16, 0.15);
+    border-color: rgb(0, 141, 147);
+    box-shadow: 0 0 0 3px rgba(151, 168, 220, 0.15);
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -166,7 +167,7 @@
     padding: 0.875rem 1.5rem;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, #e02010 0%, #ff6b00 100%);
+    background: linear-gradient(135deg, rgb(0, 141, 147) 0%, rgb(0, 141, 147) 100%);
     color: #ffffff;
     font-size: 1rem;
     font-weight: 600;
