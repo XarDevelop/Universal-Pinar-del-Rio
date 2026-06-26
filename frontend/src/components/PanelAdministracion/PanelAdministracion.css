@@ -1,35 +1,149 @@
-.admin-section{
-    margin: 20px 15px;
-    background-color:rgb(241, 241, 241);
-    border: 3px solid rgb(218, 218, 218);
-    border-radius: 20px;
-    padding: 30px;
-    h2{
-        text-align: center;
-        margin-bottom: 10px;
-        color: rgb(75, 74, 74);
-    }
+/* ============================================
+   PANEL DE ADMINISTRACIÓN
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
 
-    .admin-button{
-        margin-bottom: 10px;
-        width: 200px;
-        height: 28px;
-        background: rgb(0, 141, 147);
-        color: white;
-        font-size: 15px;
-        border: none;
-        border-radius: 10px;
-        transition: all 0.2s ease;
-    }
-
+.admin-section {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  animation: fadeIn 0.5s ease both;
 }
 
-.center-section{
-    display: grid;
-    justify-content: center;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.admin-button:hover{
-    background: #05317e;
-    }
+.admin-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
+.admin-section h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(
+    180deg,
+    rgb(0, 141, 147) 0%,
+    rgb(0, 180, 185) 100%
+  );
+  border-radius: 4px;
+}
+
+/* ============================================
+   FILA DE BOTONES
+   ============================================ */
+
+.buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* ============================================
+   BOTÓN ADMINISTRATIVO
+   ============================================ */
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(0, 141, 147, 0.15);
+  border-radius: 12px;
+  color: rgb(0, 120, 130);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 100, 110, 0.06);
+}
+
+.admin-btn:hover {
+  border-color: rgba(0, 141, 147, 0.3);
+  color: rgb(0, 141, 147);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 141, 147, 0.1);
+}
+
+.admin-btn.active {
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(0, 141, 147, 0.25);
+}
+
+/* Botón eliminar - rojo */
+.btn-danger {
+  color: rgb(220, 38, 38);
+  border-color: rgba(220, 38, 38, 0.15);
+}
+
+.btn-danger:hover {
+  color: rgb(220, 38, 38);
+  border-color: rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.1);
+}
+
+.btn-danger.active {
+  background: linear-gradient(
+    135deg,
+    rgb(220, 38, 38) 0%,
+    rgb(239, 68, 68) 100%
+  );
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.25);
+}
+
+/* ============================================
+   WRAPPER DEL MODAL - FADE SUAVE
+   ============================================ */
+
+.modal-wrapper {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: 
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    margin 0.3s ease;
+  margin: 0;
+}
+
+.modal-wrapper.visible {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .buttons-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-btn {
+    width: 100%;
+  }
+}

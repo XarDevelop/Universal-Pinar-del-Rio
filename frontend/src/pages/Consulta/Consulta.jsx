@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Consulta.css';
 
-import HeroSection from '../../components/HeroSection/HeroSection';
+import Layout from '../../components/Layout/Layout';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SearchModal from '../../components/SearchModal/SearchModal';
-import SectionMenu from '../../components/SectionMenu/SectionMenu';
 import DocumentsGrid from '../../components/DocumentsGrid/DocumentsGrid';
 
 const Consulta = () => {
@@ -74,14 +73,12 @@ const Consulta = () => {
     setDocumentosFiltrados([]);
   };
 
-  // ✅ Búsqueda ahora se hace DENTRO del modal
   const handleBusquedaModal = (valor) => {
     setBusqueda(valor);
     
     if (valor.trim() === '') {
       setDocumentosFiltrados([]);
     } else {
-      // Buscar en TODOS los documentos de todas las secciones
       const filtrados = documentos.filter(doc => 
         doc.nombre_documento.toLowerCase().includes(valor.toLowerCase())
       );
@@ -125,36 +122,35 @@ const Consulta = () => {
   const nombreSeccionActiva = secciones.find(s => s.id_seccion === seccionActiva)?.nombre_seccion || 'Documentos';
 
   if (loading) {
-    return <div className="loading">Cargando...</div>;
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+        <span>Cargando...</span>
+      </div>
+    );
   }
 
   return (
-    <div className="consulta-page">
-      <HeroSection />
+    <Layout
+      sections={secciones}
+      activeSection={seccionActiva}
+      onSectionClick={handleSeccionClick}
+      onLogout={handleLogout}
+    >
+      <div className="consulta-content">
+        <SearchBar
+          onClick={() => setMostrarModal(true)}
+          placeholder="Buscar documento..."
+        />
 
-      {/* ✅ SearchBar ahora es un botón que abre el modal */}
-      <SearchBar
-        onClick={() => setMostrarModal(true)}
-        placeholder="Buscar documento..."
-      />
-
-      {/* ✅ El modal maneja su propia búsqueda */}
-      <SearchModal
-        isOpen={mostrarModal}
-        onClose={() => setMostrarModal(false)}
-        searchTerm={busqueda}
-        onSearchChange={handleBusquedaModal}
-        onClear={handleLimpiarBusqueda}
-        results={documentosFiltrados}
-        onDownload={handleDescargar}
-      />
-
-      <div className="main-container">
-        <SectionMenu
-          sections={secciones}
-          activeSection={seccionActiva}
-          onSectionClick={handleSeccionClick}
-          onLogout={handleLogout}
+        <SearchModal
+          isOpen={mostrarModal}
+          onClose={() => setMostrarModal(false)}
+          searchTerm={busqueda}
+          onSearchChange={handleBusquedaModal}
+          onClear={handleLimpiarBusqueda}
+          results={documentosFiltrados}
+          onDownload={handleDescargar}
         />
 
         <DocumentsGrid
@@ -166,10 +162,15 @@ const Consulta = () => {
 
       {error && (
         <div className="error-toast" onClick={() => setError('')}>
-          {error}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <span>{error}</span>
         </div>
       )}
-    </div>
+    </Layout>
   );
 };
 

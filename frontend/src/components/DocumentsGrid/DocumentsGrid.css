@@ -1,68 +1,74 @@
+/* ============================================
+   DOCUMENTS GRID - CONTENEDOR DE TARJETAS
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
 .documents-grid {
   display: grid;
-  /* ✅ Responsivo: tantas columnas como quepan de 250px mínimo */
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  padding: 20px;
-  /* ✅ Asegura que ocupe todo el ancho disponible */
-  width: 100%;
-  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  padding: 0.5rem;
+  animation: gridFadeIn 0.5s ease both;
 }
 
-/* ✅ Responsive: en pantallas medianas, columnas más pequeñas */
-@media (max-width: 1200px) {
-  .documents-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    padding: 16px;
-  }
+@keyframes gridFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ✅ Responsive: en tablets */
-@media (max-width: 768px) {
-  .documents-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-    padding: 12px;
-  }
-}
-
-/* ✅ Responsive: en móviles, 2 columnas o 1 */
-@media (max-width: 480px) {
-  .documents-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-}
-
-/* ✅ Móvil pequeño: 1 columna */
-@media (max-width: 320px) {
-  .documents-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* ============================================
+   ESTADO VACÍO
+   ============================================ */
 
 .documents-empty {
-  text-align: center;
-  padding: 10px;
-  color: #64748b;
-  /* ✅ Centrar en la pantalla */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
-  grid-column: 1 / -1; /* ✅ Ocupa todas las columnas si está en grid */
+  padding: 4rem 2rem;
+  text-align: center;
+  animation: fadeInUp 0.5s ease both;
 }
 
 .empty-icon {
-  font-size: 48px;
-  display: block;
-  margin-bottom: 16px;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .documents-empty p {
-  margin: 0;
-  font-size: 16px;
+  color: rgb(100, 116, 139);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .documents-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .documents-empty {
+    padding: 3rem 1rem;
+  }
+
+  .empty-icon {
+    font-size: 2.5rem;
+  }
 }

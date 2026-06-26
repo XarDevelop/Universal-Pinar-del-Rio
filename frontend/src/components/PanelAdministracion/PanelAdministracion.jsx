@@ -5,49 +5,50 @@ import ModalAgregarUsuario from "../ModalAgregarUsuario/ModalAgregarUsuario";
 import ModalEliminarUsuario from "../ModalEliminarUsuario/ModalEliminarUsuario";
 
 export default function PanelAdministracion() {
-  const [mostrarModalUsuario, setMostrarModalUsuario] = useState(false);
-  const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+  const [mostrarAgregar, setMostrarAgregar] = useState(false);
+  const [mostrarEliminar, setMostrarEliminar] = useState(false);
 
-  const toggleModal = () => {
-    setMostrarModalUsuario(!mostrarModalUsuario);
+  const toggleAgregar = () => {
+    setMostrarEliminar(false);
+    setMostrarAgregar(!mostrarAgregar);
   }
 
-  const toggleModalEliminar = () => {
-    setMostrarModalEliminar(!mostrarModalEliminar);
+  const toggleEliminar = () => {
+    setMostrarAgregar(false);
+    setMostrarEliminar(!mostrarEliminar);
   }
-  
+
   return (
     <div className="admin-section">
-        <h2>Panel de Administrador</h2>
-        <div className="center-section">
-          <button
-            className="admin-button"
-            onClick={toggleModal}
-          >
-            Agregar Usuario
-          </button>
-          
-          {mostrarModalUsuario && (
-            <ModalAgregarUsuario 
-              onClose={toggleModal}
-            />
-          )}
-          
-          <button 
-            className="admin-button"
-            onClick={toggleModalEliminar}
-          >
-            Eliminar Usuario
-          </button>
+      <h2>Panel de Administrador</h2>
+      
+      <div className="buttons-row">
+        <button
+          className={`admin-btn ${mostrarAgregar ? 'active' : ''}`}
+          onClick={toggleAgregar}
+        >
+          Agregar Usuario
+        </button>
 
-          {mostrarModalEliminar && (
-            <ModalEliminarUsuario 
-              onClose={toggleModalEliminar}
-            />
-          )}
-          
-          <PapeleraButton />
-        </div>
+        <button 
+          className={`admin-btn btn-danger ${mostrarEliminar ? 'active' : ''}`}
+          onClick={toggleEliminar}
+        >
+          Eliminar Usuario
+        </button>
+
+        <PapeleraButton />
+      </div>
+
+      {/* Modal Agregar - aparece debajo de los botones */}
+      <div className={`modal-wrapper ${mostrarAgregar ? 'visible' : ''}`}>
+        <ModalAgregarUsuario onClose={() => setMostrarAgregar(false)} />
+      </div>
+
+      {/* Modal Eliminar - aparece debajo de los botones */}
+      <div className={`modal-wrapper ${mostrarEliminar ? 'visible' : ''}`}>
+        <ModalEliminarUsuario onClose={() => setMostrarEliminar(false)} />
+      </div>
     </div>
   )
 }

@@ -1,52 +1,297 @@
-.menu-section {
-  background: white;
-  border-right: 1px solid #e9ecef;
-  min-height: calc(100vh - 200px);
+/* ============================================
+   SIDEBAR - MENÚ LATERAL DESLIZABLE
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
+/* Overlay oscuro cuando el menú está abierto */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
 }
 
-.menu-container {
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================
+   MENÚ PRINCIPAL
+   ============================================ */
+.menu-section {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    rgb(0, 100, 110) 0%,
+    rgb(0, 120, 130) 30%,
+    rgb(0, 141, 147) 70%,
+    rgb(0, 160, 165) 100%
+  );
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 1rem 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  box-shadow: 4px 0 24px rgba(0, 100, 110, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.menu-section.open {
+  transform: translateX(0);
+}
+
+/* ============================================
+   HEADER DEL MENÚ
+   ============================================ */
+/* ============================================
+   HEADER DEL MENÚ - CON BOTÓN CERRAR
+   ============================================ */
+.menu-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.menu-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ============================================
+   BOTÓN CERRAR (X)
+   ============================================ */
+.menu-close-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-close-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-close-btn:hover::before {
+  opacity: 1;
+}
+
+.menu-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.menu-close-btn:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+.menu-close-btn svg {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.menu-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ============================================
+   CONTENEDOR DEL MENÚ (scrollable)
+   ============================================ */
+.menu-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.menu-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.menu-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+.menu-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================
+   LISTA DE ITEMS
+   ============================================ */
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-shrink: 0;
 }
 
+/* ============================================
+   ITEM INDIVIDUAL
+   ============================================ */
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.5rem;
+  gap: 0.875rem;
+  padding: 0.875rem 1.25rem;
+  margin: 0 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9375rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  color: #495057;
-  border-left: 3px solid transparent;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+/* Animación de entrada cuando el menú se abre */
+.menu-section.open .menu-item {
+  animation: menuItemSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.menu-section.open .menu-item:nth-child(1) { animation-delay: 0.1s; }
+.menu-section.open .menu-item:nth-child(2) { animation-delay: 0.15s; }
+.menu-section.open .menu-item:nth-child(3) { animation-delay: 0.2s; }
+.menu-section.open .menu-item:nth-child(4) { animation-delay: 0.25s; }
+.menu-section.open .menu-item:nth-child(5) { animation-delay: 0.3s; }
+.menu-section.open .menu-item:nth-child(6) { animation-delay: 0.35s; }
+.menu-section.open .menu-item:nth-child(7) { animation-delay: 0.4s; }
+.menu-section.open .menu-item:nth-child(8) { animation-delay: 0.45s; }
+.menu-section.open .menu-item:nth-child(9) { animation-delay: 0.5s; }
+.menu-section.open .menu-item:nth-child(10) { animation-delay: 0.55s; }
+
+@keyframes menuItemSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ffffff;
+  border-radius: 0 4px 4px 0;
+  transform: scaleY(0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu-item:hover {
-  background: #f8f9fa;
-  color: #2a5298;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
 }
 
+.menu-item:hover::before {
+  transform: scaleY(0.6);
+}
+
+/* ============================================
+   ITEM ACTIVO
+   ============================================ */
 .menu-item.active {
-  background: #e7f1ff;
-  color: #2a5298;
-  border-left-color: #2a5298;
-  font-weight: 500;
+  color: rgb(0, 141, 147);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  font-weight: 600;
 }
 
+.menu-item.active::before {
+  transform: scaleY(1);
+  background: rgb(0, 141, 147);
+}
+
+.menu-item.active:hover {
+  color: rgb(0, 141, 147);
+  background: #ffffff;
+  transform: translateX(0);
+}
+
+/* ============================================
+   ICONO DE SECCIÓN
+   ============================================ */
 .section-icon {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  stroke-width: 2;
+  transition: all 0.3s ease;
 }
 
-.menu-item span {
-  font-size: 0.95rem;
+.menu-item:hover .section-icon {
+  transform: scale(1.1);
+}
+
+.menu-item.active .section-icon {
+  stroke: rgb(0, 141, 147);
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+@media (max-width: 767px) {
+  .menu-section {
+    width: 280px;
+  }
+
+  .menu-overlay {
+    background: rgba(0, 0, 0, 0.4);
+  }
 }

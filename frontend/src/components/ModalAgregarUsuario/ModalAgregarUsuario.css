@@ -1,250 +1,158 @@
 /* ============================================
-   MODAL AGREGAR USUARIO - ESTILOS COMPLETOS
+   FORMULARIO AGREGAR USUARIO
+   Color corporativo: rgb(0, 141, 147)
    ============================================ */
 
-/* Overlay del modal */
-.search-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 1rem;
-    animation: fadeIn 0.3s ease;
+.modal-form {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(0, 141, 147, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* Error */
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgb(254, 242, 242);
+  border: 1px solid rgb(254, 202, 202);
+  border-radius: 10px;
+  color: rgb(220, 38, 38);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
-/* Contenedor del modal */
-.search-modal {
-    background: #1a1a2e;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    animation: slideUp 0.3s ease;
+/* Filas */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.form-row label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(55, 65, 81);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Header del modal */
-.search-modal-header {
-    color:rgb(0, 141, 147);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.form-row input,
+.form-row select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgb(226, 232, 240);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: rgb(30, 41, 59);
+  background: #ffffff;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.search-modal-header h3 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: rgb(0, 141, 147);
+.form-row input:hover,
+.form-row select:hover {
+  border-color: rgb(203, 213, 225);
 }
 
-/* Botón cerrar */
-.close-modal {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.08);
-    border: none;
-    border-radius: 8px;
-    color: #a0a0b0;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.form-row input:focus,
+.form-row select:focus {
+  border-color: rgb(0, 141, 147);
+  box-shadow: 0 0 0 3px rgba(0, 141, 147, 0.1);
 }
 
-.close-modal:hover {
-    background: rgba(224, 32, 16, 0.2);
-    color: rgb(0, 141, 147);
-    transform: rotate(90deg);
+.form-row input::placeholder {
+  color: rgb(148, 163, 184);
 }
 
-/* Contenido del modal */
-.search-modal > div:nth-child(2) {
-    padding: 1.5rem;
+.form-row select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23008d93' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+  padding-right: 2.5rem;
 }
 
-/* Mensaje de error */
-.error-message {
-    background: rgba(224, 32, 16, 0.15);
-    border: 1px solid rgba(224, 32, 16, 0.3);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    color: #ff6b6b !important;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+/* Dos columnas */
+.form-row-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-/* ============================================
-   FORMULARIO
-   ============================================ */
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+/* Acciones */
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
-.form-field label {
-    color: #a0a0b0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
+.btn-cancel,
+.btn-submit {
+  flex: 1;
+  padding: 0.875rem;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.form-field input,
-.form-field select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(53, 53, 53, 0.557);
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    outline: none;
+.btn-cancel {
+  background: rgb(241, 245, 249);
+  border: 1.5px solid rgb(226, 232, 240);
+  color: rgb(100, 116, 139);
 }
 
-.form-field input:focus,
-.form-field select:focus {
-    border-color: rgb(0, 141, 147);
-    box-shadow: 0 0 0 3px rgba(151, 168, 220, 0.15);
-    background: rgba(255, 255, 255, 0.08);
+.btn-cancel:hover {
+  background: rgb(254, 242, 242);
+  border-color: rgb(254, 202, 202);
+  color: rgb(220, 38, 38);
 }
 
-.form-field input::placeholder {
-    color: #6b6b7b;
+.btn-submit {
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 141, 147, 0.2);
 }
 
-/* Select personalizado */
-.form-field select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0a0b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 141, 147, 0.3);
 }
 
-.form-field select option {
-    background: #1a1a2e;
-    color: #ffffff;
-}
-
-/* ============================================
-   BOTÓN AGREGAR (CORREGIDO)
-   ============================================ */
-
-.content-add {
-    width: 100%;
-    margin: 1.5rem 0 0 0; /* Corregido: centrado, no desplazado */
-    padding: 0.875rem 1.5rem;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(135deg, rgb(0, 141, 147) 0%, rgb(0, 141, 147) 100%);
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(224, 32, 16, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.content-add:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(224, 32, 16, 0.4);
-    filter: brightness(1.1);
-}
-
-.content-add:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.content-add:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: linear-gradient(135deg, #666 0%, #888 100%);
-}
-
-/* Spinner de carga (opcional, si quieres agregarlo) */
-.content-add::after {
-    content: '';
-    width: 0;
-    height: 0;
-    transition: all 0.3s ease;
-}
-
-/* ============================================
-   SCROLLBAR DEL MODAL
-   ============================================ */
-
-.search-modal::-webkit-scrollbar {
-    width: 6px;
-}
-
-.search-modal::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.search-modal::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-}
-
-.search-modal::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+.btn-submit:disabled {
+  background: rgb(209, 213, 219);
+  cursor: not-allowed;
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
 
-@media (max-width: 480px) {
-    .search-modal {
-        max-height: 95vh;
-        border-radius: 12px;
-    }
-    
-    .search-modal-header {
-        padding: 1rem;
-    }
-    
-    .search-modal > div:nth-child(2) {
-        padding: 1rem;
-    }
-    
-    .form-field input,
-    .form-field select {
-        padding: 0.625rem 0.875rem;
-    }
+@media (max-width: 767px) {
+  .modal-form {
+    padding: 1.25rem;
+  }
+
+  .form-row-two {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

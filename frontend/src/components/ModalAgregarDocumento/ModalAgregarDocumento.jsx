@@ -38,7 +38,6 @@ const ModalAgregarDocumento = ({ isOpen, onClose, onSubmit, seccionNombre }) => 
       let data;
       
       if (file) {
-        // Convertir archivo a base64
         const reader = new FileReader();
         const documentoBase64 = await new Promise((resolve, reject) => {
           reader.onloadend = () => resolve(reader.result);
@@ -46,13 +45,11 @@ const ModalAgregarDocumento = ({ isOpen, onClose, onSubmit, seccionNombre }) => 
           reader.readAsDataURL(file);
         });
         
-        // ✅ CORREGIDO: Enviar nombre_archivo también
         data = { 
           documento: documentoBase64,
-          nombre_archivo: file.name  // ✅ Agregado nombre del archivo
+          nombre_archivo: file.name
         };
       } else {
-        // Enviar ruta
         data = { filePath: rutaManual };
       }
 
@@ -74,65 +71,83 @@ const ModalAgregarDocumento = ({ isOpen, onClose, onSubmit, seccionNombre }) => 
     onClose();
   };
 
-  if (!isOpen) return null;
-
+  // Ya no necesitamos isOpen aquí porque el padre controla la visibilidad
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Agregar Documento</h2>
-        <p className="seccion-info">Sección: <strong>{seccionNombre}</strong></p>
-        
-        <form onSubmit={handleSubmit}>
-          <div 
-            {...getRootProps()} 
-            className={`dropzone ${isDragActive ? 'active' : ''}`}
-          >
-            <input {...getInputProps()} />
-            {file ? (
-              <p className="file-selected">📄 {file.name}</p>
-            ) : isDragActive ? (
-              <p>Suelta el archivo aquí...</p>
-            ) : (
-              <div>
-                <p>Arrastra y suelta un archivo aquí</p>
-                <span className="or-divider">o</span>
-                <p className="click-hint">Haz clic para seleccionar</p>
-              </div>
-            )}
-          </div>
-
-          <div className="divider">— o ingresa la ruta manualmente —</div>
-
-          <input
-            type="text"
-            className="ruta-input"
-            placeholder="C:\ruta\del\archivo.pdf"
-            value={rutaManual}
-            onChange={(e) => {
-              setRutaManual(e.target.value);
-              if (e.target.value) setFile(null);
-            }}
-          />
-
-          <div className="modal-actions">
-            <button 
-              type="button" 
-              className="btn-cancelar" 
-              onClick={handleClose}
-              disabled={loading}
-            >
-              Cancelar
-            </button>
-            <button 
-              type="submit" 
-              className="btn-confirmar"
-              disabled={loading || (!file && !rutaManual)}
-            >
-              {loading ? 'Subiendo...' : 'Agregar'}
-            </button>
-          </div>
-        </form>
+    <div className="modal-form modal-form-upload">
+      <div className="modal-form-header">
+        <h3>Agregar Documento</h3>
+        <span className="seccion-badge">{seccionNombre}</span>
       </div>
+      
+      <form onSubmit={handleSubmit}>
+        <div 
+          {...getRootProps()} 
+          className={`dropzone ${isDragActive ? 'active' : ''} ${file ? 'has-file' : ''}`}
+        >
+          <input {...getInputProps()} />
+          {file ? (
+            <div className="file-info">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <p className="file-name">{file.name}</p>
+              <p className="file-size">{(file.size / 1024).toFixed(1)} KB</p>
+            </div>
+          ) : isDragActive ? (
+            <div className="dropzone-hint">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <p>Suelta el archivo aquí</p>
+            </div>
+          ) : (
+            <div className="dropzone-hint">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <p>Arrastra y suelta un archivo</p>
+              <span className="or-divider">o</span>
+              <p className="click-hint">Haz clic para seleccionar</p>
+            </div>
+          )}
+        </div>
+
+        <div className="divider">— o ingresa la ruta manualmente —</div>
+
+        <input
+          type="text"
+          className="ruta-input"
+          placeholder="C:\ruta\del\archivo.pdf"
+          value={rutaManual}
+          onChange={(e) => {
+            setRutaManual(e.target.value);
+            if (e.target.value) setFile(null);
+          }}
+        />
+
+        <div className="form-actions">
+          <button 
+            type="button" 
+            className="btn-cancel" 
+            onClick={handleClose}
+            disabled={loading}
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            className="btn-submit"
+            disabled={loading || (!file && !rutaManual)}
+          >
+            {loading ? 'Subiendo...' : 'Agregar Documento'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

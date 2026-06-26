@@ -1,136 +1,221 @@
-/* src/components/ModalEliminarUsuario/ModalEliminarUsuario.css */
+/* ============================================
+   FORMULARIO ELIMINAR USUARIO
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
 
-/* Hereda estilos base del modal */
-.search-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.modal-form {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(0, 141, 147, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
 }
 
-.search-modal {
-    background: white;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+.modal-form-danger {
+  border-color: rgba(220, 38, 38, 0.15);
 }
 
-.search-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 20px;
-    border-bottom: 1px solid #e0e0e0;
-    background: #f5f5f5;
-    border-radius: 8px 8px 0 0;
+/* Error */
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgb(254, 242, 242);
+  border: 1px solid rgb(254, 202, 202);
+  border-radius: 10px;
+  color: rgb(220, 38, 38);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
-.search-modal-header h3 {
-    margin: 0;
-    color: #d32f2f;
+/* Filas */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
 }
 
-.close-modal {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #666;
-    line-height: 1;
+.form-row label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(55, 65, 81);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.close-modal:hover {
-    color: #000;
+/* Búsqueda */
+.search-row {
+  display: flex;
+  gap: 0.5rem;
 }
 
-.form-field {
-    padding: 20px;
+.search-row input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgb(226, 232, 240);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: rgb(30, 41, 59);
+  background: #ffffff;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.info-usuario {
-    margin-bottom: 5px;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 4px;
-    border-left: 4px solid #d32f2f;
+.search-row input:hover {
+  border-color: rgb(203, 213, 225);
 }
 
-.info-usuario p {
-    margin: 5px 0;
-    color: #555;
+.search-row input:focus {
+  border-color: rgb(0, 141, 147);
+  box-shadow: 0 0 0 3px rgba(0, 141, 147, 0.1);
 }
 
-.dato-usuario {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    margin-left: 10px;
+.search-row input::placeholder {
+  color: rgb(148, 163, 184);
 }
 
-.confirmacion-texto {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-align: center;
+.btn-buscar {
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.content-delete {
-    margin-left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 10px;
-    padding: 10px 30px;
-    border-radius: 3px;
-    border: none;
-    background: linear-gradient(135deg, #d32f2f, #b71c1c);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.btn-buscar:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 141, 147, 0.3);
 }
 
-.content-delete:hover:not(:disabled) {
-    background: linear-gradient(135deg, #b71c1c, #7f0000);
-    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+.btn-buscar:disabled {
+  background: rgb(209, 213, 219);
+  cursor: not-allowed;
 }
 
-.content-delete:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+/* Usuario encontrado */
+.user-found {
+  padding: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 141, 147, 0.05) 0%,
+    rgba(0, 180, 185, 0.05) 100%
+  );
+  border: 1.5px solid rgba(0, 141, 147, 0.15);
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
-.error-message {
-    background: #ffebee;
-    padding: 10px;
-    border-radius: 4px;
-    border-left: 4px solid #d32f2f;
+.user-found p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgb(100, 116, 139);
 }
 
-/* Notificación de éxito */
-.notificacion-exito {
-    padding: 30px;
-    text-align: center;
-    color: #2e7d32;
+.user-found p strong {
+  color: rgb(30, 41, 59);
+  font-weight: 600;
 }
 
-.notificacion-exito h3 {
-    margin: 0 0 10px 0;
-    font-size: 20px;
+.user-name {
+  font-size: 1.125rem !important;
+  font-weight: 700;
+  color: rgb(0, 141, 147) !important;
+  margin: 0.25rem 0 0.5rem !important;
 }
 
-.notificacion-exito p {
-    margin: 0;
-    font-size: 16px;
-    color: #555;
+/* Confirmación */
+.confirm-text {
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  color: rgb(100, 116, 139);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
-.notificacion-exito strong {
-    color: #d32f2f;
-    font-size: 18px;
+/* Acciones */
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-cancel,
+.btn-eliminar {
+  flex: 1;
+  padding: 0.875rem;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background: rgb(241, 245, 249);
+  border: 1.5px solid rgb(226, 232, 240);
+  color: rgb(100, 116, 139);
+}
+
+.btn-cancel:hover {
+  background: rgb(254, 242, 242);
+  border-color: rgb(254, 202, 202);
+  color: rgb(220, 38, 38);
+}
+
+.btn-eliminar {
+  background: linear-gradient(
+    135deg,
+    rgb(220, 38, 38) 0%,
+    rgb(239, 68, 68) 100%
+  );
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+.btn-eliminar:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+}
+
+.btn-eliminar:disabled {
+  background: rgb(209, 213, 219);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .modal-form {
+    padding: 1.25rem;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .btn-buscar {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
 }

@@ -1,147 +1,266 @@
+/* ============================================
+   SEARCH MODAL - OVERLAY Y CONTENEDOR
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
 .search-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 200px;
-  z-index: 1000;
+  padding-top: 10vh;
+  z-index: 200;
+  animation: overlayFadeIn 0.3s ease both;
 }
 
-.search-modal {
-  background: white;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 400px;
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
+
+/* ============================================
+   MODAL PRINCIPAL
+   ============================================ */
+
+.search-modal {
+  width: 100%;
+  max-width: 560px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 141, 147, 0.08);
+  overflow: hidden;
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   HEADER DEL MODAL
+   ============================================ */
 
 .search-modal-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e9ecef;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .search-modal-header h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #212529;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  letter-spacing: -0.3px;
 }
 
 .close-modal {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #6c757d;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0;
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: background 0.2s;
+  background: rgba(241, 245, 249, 0.8);
+  border: none;
+  border-radius: 10px;
+  color: rgb(100, 116, 139);
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
 }
 
 .close-modal:hover {
-  background: #f8f9fa;
-  color: #dc3545;
+  background: rgb(254, 242, 242);
+  color: rgb(220, 38, 38);
+  transform: rotate(90deg);
 }
 
-.search-modal-content {
-  padding: 1rem 1.5rem;
-  max-height: 300px;
-  overflow-y: auto;
+.close-modal:active {
+  transform: rotate(90deg) scale(0.9);
 }
 
-.search-hint,
-.no-results {
-  text-align: center;
-  color: #6c757d;
-  padding: 2rem;
-  margin: 0;
-}
-
-.no-results {
-  color: #dc3545;
-}
-
-.search-results-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.search-result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  border-bottom: 1px solid #f1f3f5;
-  transition: background 0.2s;
-}
-
-.search-result-item:hover {
-  background: #f8f9fa;
-}
-
-/* Agregar al final de tu SearchModal.css */
+/* ============================================
+   CONTENEDOR DEL INPUT
+   ============================================ */
 
 .search-modal-input-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #f9fafb;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  position: relative;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 .search-modal-input-container .search-icon {
   width: 20px;
   height: 20px;
-  color: #6b7280;
   flex-shrink: 0;
+  color: rgb(0, 141, 147);
+  stroke-width: 2;
+  opacity: 0.7;
 }
 
 .search-modal-input {
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 16px;
-  color: #111827;
+  font-size: 1rem;
+  font-family: inherit;
+  color: rgb(30, 41, 59);
   outline: none;
+  padding: 0.25rem 0;
 }
 
 .search-modal-input::placeholder {
-  color: #9ca3af;
+  color: rgb(148, 163, 184);
+  font-weight: 400;
 }
 
 .clear-search-btn {
-  background: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(226, 232, 240, 0.6);
   border: none;
-  font-size: 20px;
-  color: #6b7280;
+  border-radius: 50%;
+  color: rgb(100, 116, 139);
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  padding: 0 4px;
+  transition: all 0.2s ease;
   line-height: 1;
+  flex-shrink: 0;
+  animation: fadeInScale 0.2s ease both;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .clear-search-btn:hover {
-  color: #374151;
+  background: rgb(254, 242, 242);
+  color: rgb(220, 38, 38);
+  transform: scale(1.1);
 }
 
-.search-result-item:last-child {
-  border-bottom: none;
+/* ============================================
+   CONTENIDO / RESULTADOS
+   ============================================ */
+
+.search-modal-content {
+  padding: 0.5rem;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.search-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 141, 147, 0.2);
+  border-radius: 10px;
+}
+
+.search-modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 141, 147, 0.3);
+}
+
+/* ============================================
+   MENSAJES (hint / no results)
+   ============================================ */
+
+.search-hint,
+.no-results {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: rgb(148, 163, 184);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.no-results {
+  color: rgb(100, 116, 139);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   LISTA DE RESULTADOS
+   ============================================ */
+
+.search-results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: resultSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.search-result-item:nth-child(1) { animation-delay: 0.05s; }
+.search-result-item:nth-child(2) { animation-delay: 0.1s; }
+.search-result-item:nth-child(3) { animation-delay: 0.15s; }
+.search-result-item:nth-child(4) { animation-delay: 0.2s; }
+.search-result-item:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes resultSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.search-result-item:hover {
+  background: rgba(0, 141, 147, 0.06);
+  transform: translateX(4px);
 }
 
 .result-info {
@@ -155,30 +274,112 @@
 .document-icon {
   width: 20px;
   height: 20px;
-  color: #2a5298;
   flex-shrink: 0;
+  color: rgb(0, 141, 147);
+  opacity: 0.7;
+  stroke-width: 2;
 }
 
 .result-name {
-  font-size: 0.95rem;
-  color: #212529;
+  font-size: 0.9375rem;
+  color: rgb(30, 41, 59);
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* ============================================
+   BOTÓN DESCARGAR
+   ============================================ */
+
 .btn-descargar-small {
-  background: #28a745;
-  color: white;
-  border: none;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .btn-descargar-small:hover {
-  background: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 141, 147, 0.3);
+}
+
+.btn-descargar-small:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .search-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .search-modal {
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes modalSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .search-modal-content {
+    max-height: none;
+    flex: 1;
+  }
+
+  .search-modal-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .search-modal-input-container {
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .search-modal-header h3 {
+    font-size: 1rem;
+  }
+
+  .search-modal-input {
+    font-size: 0.9375rem;
+  }
+
+  .result-name {
+    font-size: 0.875rem;
+  }
+
+  .btn-descargar-small {
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.75rem;
+  }
 }

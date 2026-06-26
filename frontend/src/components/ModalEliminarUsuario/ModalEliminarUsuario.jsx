@@ -21,17 +21,13 @@ export default function ModalEliminarUsuario({ onClose, onUsuarioEliminado }) {
 
         try {
             const token = localStorage.getItem('token');
-            
             const response = await axios.get(`/api/admin/usuario/${nombreUsuario}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
+                headers: { "Authorization": `Bearer ${token}` }
             });
 
             setUsuarioEncontrado(response.data);
             
         } catch (error) {
-            console.error('Error buscando usuario:', error);
             setError('Usuario no encontrado');
             setUsuarioEncontrado(null);
         } finally {
@@ -58,21 +54,18 @@ export default function ModalEliminarUsuario({ onClose, onUsuarioEliminado }) {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                data: {
-                    idUsuario: usuarioEncontrado.id_usuario
-                }
+                data: { idUsuario: usuarioEncontrado.id_usuario }
             });
 
             setNombreEliminado(usuarioEncontrado.nombre_usuario);
             setEliminado(true);
             
             setTimeout(() => {
-                onUsuarioEliminado();
+                onUsuarioEliminado?.();
                 onClose();
             }, 2000);
             
         } catch (error) {
-            console.error('Error eliminando usuario:', error);
             setError(error.response?.data?.message || 'Error al eliminar usuario');
         } finally {
             setLoading(false);
@@ -80,74 +73,78 @@ export default function ModalEliminarUsuario({ onClose, onUsuarioEliminado }) {
     }
 
     if (eliminado) {
-        alert(`Usuario ${nombreEliminado} con exito `)
+        alert(`Usuario ${nombreEliminado} eliminado con éxito`)
+        setNombreUsuario('')
+        setUsuarioEncontrado('');
+        setLoading(false)
+        setError('')
+        setEliminado(false)
+        setNombreEliminado('')
     }
 
     return (
-        <div className='search-modal-overlay'>
-            <div className='search-modal'>
-                <div className='search-modal-header'>
-                    <h3>Eliminar Usuario</h3>
-                    <button className='close-modal' onClick={onClose}>×</button>
+        <div className='modal-form modal-form-danger'>
+            {error && (
+                <div className="form-error">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    {error}
                 </div>
-                
-                <div>
-                    {error && (
-                        <div className="error-message" style={{color: 'red', marginBottom: '10px'}}>
-                            {error}
-                        </div>
-                    )}
-                    
-                    <form className='form-field' onSubmit={HandleSubmitEliminar}>
-                        <label htmlFor="nombre-usuario">Nombre de usuario:</label>
+            )}
+            
+            <form onSubmit={HandleSubmitEliminar}>
+                <div className='form-row'>
+                    <label>Nombre de usuario a eliminar:</label>
+                    <div className='search-row'>
                         <input 
-                            id="nombre-usuario"
                             value={nombreUsuario}
                             onChange={(e) => setNombreUsuario(e.target.value)}
                             type="text"
-                            placeholder="Ingrese nombre de usuario a eliminar"
+                            placeholder="Ingrese nombre de usuario"
                             disabled={loading}
                         />
-                        <br />
-
                         <button 
                             type="button"
-                            className='content-add'
+                            className='btn-buscar'
                             onClick={buscarUsuario}
                             disabled={loading}
                         >
-                            {loading ? 'Buscando...' : 'Buscar'}
+                            {loading ? '...' : 'Buscar'}
                         </button>
-                        <br />
-
-                        {usuarioEncontrado && (
-                            <div className='info-usuario'>
-                                <p><strong>Usuario encontrado:</strong></p>
-                                <p className='dato-usuario'>{usuarioEncontrado.nombre_usuario}</p>
-                                <br />
-                                <p><strong>Sección:</strong></p>
-                                <p className='dato-usuario'>{usuarioEncontrado.nombre_seccion}</p>
-                                <br />
-                            </div>
-                        )}
-
-                        <p className='confirmacion-texto'>
-                            {usuarioEncontrado 
-                                ? '¿Está seguro que desea eliminar este usuario? Esta acción no se puede deshacer.'
-                                : 'Busque un usuario para eliminar.'
-                            }
-                        </p>
-
-                        <button 
-                            className='content-delete'
-                            type='submit'
-                            disabled={loading || !usuarioEncontrado}
-                        >
-                            {loading ? 'Eliminando...' : 'Eliminar'}
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                {usuarioEncontrado && (
+                    <div className='user-found'>
+                        <p><strong>Usuario encontrado:</strong></p>
+                        <p className='user-name'>{usuarioEncontrado.nombre_usuario}</p>
+                        <p><strong>Sección:</strong> {usuarioEncontrado.nombre_seccion}</p>
+                    </div>
+                )}
+
+                <p className='confirm-text'>
+                    {usuarioEncontrado 
+                        ? '¿Está seguro? Esta acción no se puede deshacer.'
+                        : 'Busque un usuario para eliminar.'
+                    }
+                </p>
+
+                <div className='form-actions'>
+                    <button type='button' className='btn-cancel' onClick={onClose}>
+                        Cancelar
+                    </button>
+                    <button 
+                        className='btn-eliminar' 
+                        type='submit'
+                        disabled={loading || !usuarioEncontrado}
+                    >
+                        {loading ? 'Eliminando...' : 'Eliminar'}
+                    </button>
+                </div>
+            </form>
         </div>
     )
 }

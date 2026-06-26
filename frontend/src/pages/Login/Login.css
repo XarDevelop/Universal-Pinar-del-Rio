@@ -1,215 +1,483 @@
+/* ============================================
+   LOGIN - DISEÑO MODERNO CON GRADIENTE
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.login-container {
+/* ============================================
+   WRAPPER PRINCIPAL
+   ============================================ */
+.login-wrapper {
+  display: flex;
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(135deg, #0a4a4d 0%, rgb(0, 141, 147) 50%, #0d5c5f 100%);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+/* ============================================
+   PANEL IZQUIERDO - BRANDING
+   ============================================ */
+.login-branding {
+  flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 100, 110) 0%,
+    rgb(0, 120, 130) 25%,
+    rgb(0, 141, 147) 50%,
+    rgb(0, 160, 165) 75%,
+    rgb(0, 100, 110) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
   position: relative;
   overflow: hidden;
 }
 
-.login-container::before {
+.login-branding::before {
   content: '';
   position: absolute;
   top: -50%;
-  right: -20%;
-  width: 600px;
-  height: 600px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 50%;
-  pointer-events: none;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 20% 50%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
+  animation: float 20s ease-in-out infinite;
 }
 
-.login-container::after {
+.login-branding::after {
   content: '';
   position: absolute;
   bottom: -30%;
-  left: -10%;
-  width: 400px;
-  height: 400px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 50%;
-  pointer-events: none;
+  right: -30%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle at 80% 80%,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 50%
+  );
+  animation: float 25s ease-in-out infinite reverse;
 }
 
-.login-card {
-  background-color: rgba(255, 255, 255, 0.98);
-  padding: 50px 45px;
-  border-radius: 20px;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  width: 100%;
-  max-width: 420px;
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(2deg); }
+  66% { transform: translate(-20px, 20px) rotate(-2deg); }
+}
+
+.branding-content {
   text-align: center;
-  position: relative;
+  color: #ffffff;
+  max-width: 400px;
   z-index: 1;
-  backdrop-filter: blur(10px);
-  animation: cardAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-@keyframes cardAppear {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.logo-container {
-  margin-bottom: 30px;
   position: relative;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
-.logo-container::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgb(0, 141, 147), transparent);
-  margin: 20px auto 0;
-  border-radius: 2px;
+.logo-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.5rem;
+  animation: pulseBubble 3s ease-in-out infinite;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulseBubble {
+  0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+  50% { transform: scale(1.03); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); }
 }
 
 .company-logo {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
-  border-radius: 50%;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 8px;
-  background: linear-gradient(145deg, #ffffff, #f0f4f8);
-  border: 3px solid rgb(0, 141, 147);
-  box-shadow: 0 8px 25px rgba(0, 141, 147, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.company-logo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 35px rgba(0, 141, 147, 0.3);
-}
-
-.app-title {
-  color: rgb(0, 141, 147);
-  font-size: 24px;
+.branding-title {
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: -0.3px;
-  line-height: 1.3;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.company-name {
-  color: #5a6c7d;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 40px;
-  line-height: 1.5;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+.branding-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  line-height: 1.6;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 
+.branding-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2rem;
+}
+
+.branding-dots span {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: dotBounce 1.4s ease-in-out infinite both;
+}
+
+.branding-dots span:nth-child(1) { animation-delay: -0.32s; }
+.branding-dots span:nth-child(2) { animation-delay: -0.16s; }
+.branding-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================
+   PANEL DERECHO - GRADIENTE CLARO + FORMAS FLOTANTES
+   ============================================ */
+.login-form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(
+    160deg,
+    rgb(210, 240, 242) 0%,
+    rgb(225, 248, 249) 30%,
+    rgb(200, 238, 240) 60%,
+    rgb(218, 245, 246) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Formas flotantes decorativas */
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  animation: shapeFloat 20s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, rgb(0, 141, 147), rgb(0, 180, 185));
+  top: -100px;
+  right: -50px;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.shape-2 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, rgb(0, 160, 165), rgb(0, 120, 130));
+  bottom: 10%;
+  left: -60px;
+  animation-delay: -5s;
+  animation-duration: 30s;
+}
+
+.shape-3 {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, rgb(0, 180, 185), rgb(0, 141, 147));
+  top: 40%;
+  right: 10%;
+  animation-delay: -10s;
+  animation-duration: 22s;
+}
+
+.shape-4 {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgb(0, 120, 130), rgb(0, 160, 165));
+  bottom: -30px;
+  right: 30%;
+  animation-delay: -15s;
+  animation-duration: 28s;
+}
+
+@keyframes shapeFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(20px, -30px) rotate(5deg) scale(1.05); }
+  50% { transform: translate(-10px, 20px) rotate(-3deg) scale(0.95); }
+  75% { transform: translate(15px, 10px) rotate(2deg) scale(1.02); }
+}
+
+/* ============================================
+   CARD DE LOGIN - CON BORDE Y FONDO NO BLANCO
+   ============================================ */
+.card-content {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(248, 252, 253, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 100, 110, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(0, 141, 147, 0.2);
+  animation: cardSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  position: relative;
+  z-index: 1;
+}
+
+.card-content::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(0, 141, 147),
+    rgb(0, 180, 185),
+    rgb(0, 141, 147),
+    transparent
+  );
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   HEADER DE LA CARD
+   ============================================ */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.avatar-ring {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.25rem;
+  background: linear-gradient(135deg, rgb(0, 141, 147), rgb(0, 180, 185));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 141, 147, 0.25);
+  animation: avatarPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+
+@keyframes avatarPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  color: #ffffff;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  margin-bottom: 0.35rem;
+  animation: fadeInUp 0.5s ease-out 0.5s both;
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: rgb(100, 116, 139);
+  animation: fadeInUp 0.5s ease-out 0.6s both;
+}
+
+/* ============================================
+   FORMULARIO CON ICONOS
+   ============================================ */
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 1rem;
 }
 
 .input-group {
-  text-align: left;
   position: relative;
+  animation: fadeInUp 0.5s ease-out both;
 }
 
-.input-group label {
-  text-align: center;
-  display: block;
-  margin-bottom: 10px;
-  color: #2c3e50;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+.input-group:nth-child(1) { animation-delay: 0.55s; }
+.input-group:nth-child(2) { animation-delay: 0.65s; }
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: rgb(0, 141, 147);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .input-group input {
   width: 100%;
-  padding: 15px 18px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 15px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.95rem 1rem 0.95rem 3rem;
+  border: 2px solid rgba(226, 232, 240, 0.8);
+  border-radius: 14px;
+  font-size: 0.95rem;
+  color: rgb(30, 41, 59);
+  background: rgba(255, 255, 255, 0.7);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #f8fafc;
-  color: #1e293b;
-}
-
-.input-group input:hover {
-  border-color: #cbd5e1;
-  background-color: #ffffff;
-}
-
-.input-group input:focus {
   outline: none;
-  border-color: rgb(0, 141, 147);
-  background-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(0, 141, 147, 0.1), 0 4px 12px rgba(0, 141, 147, 0.08);
 }
 
 .input-group input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
+  color: rgb(148, 163, 184);
+  transition: all 0.3s ease;
+}
+
+.input-group input:hover {
+  border-color: rgba(0, 141, 147, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.input-group input:focus {
+  border-color: rgb(0, 141, 147);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 141, 147, 0.1), 0 4px 12px rgba(0, 141, 147, 0.05);
+}
+
+.input-group input:focus + .input-icon,
+.input-group input:focus ~ .input-icon {
+  opacity: 1;
+  color: rgb(0, 141, 147);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.input-group input:focus::placeholder {
+  color: rgb(180, 190, 200);
+  transform: translateX(4px);
 }
 
 .input-group input:disabled {
-  background-color: #f1f5f9;
-  border-color: #e2e8f0;
-  color: #94a3b8;
+  background: rgb(241, 245, 249);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
+/* ============================================
+   MENSAJE DE ERROR CON ICONO
+   ============================================ */
 .error-message {
-  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-  color: #dc2626;
-  padding: 14px 16px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  border-left: 4px solid #dc2626;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.08);
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.login-button {
-  background: linear-gradient(135deg, rgb(0, 141, 147) 0%, #006d73 100%);
-  color: white;
-  border: none;
-  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgb(254, 242, 242), rgb(255, 235, 235));
+  border: 1px solid rgb(254, 202, 202);
   border-radius: 12px;
-  font-size: 16px;
+  color: rgb(220, 38, 38);
+  font-size: 0.85rem;
+  font-weight: 500;
+  animation: shakeIn 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.error-message svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+@keyframes shakeIn {
+  0% { transform: translateX(-100%); opacity: 0; }
+  60% { transform: translateX(8px); opacity: 1; }
+  80% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* ============================================
+   BOTÓN DE LOGIN CON EFECTOS
+   ============================================ */
+.login-button {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 50%,
+    rgb(0, 160, 165) 100%
+  );
+  background-size: 200% 200%;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
   font-weight: 600;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 8px;
-  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 141, 147, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   position: relative;
   overflow: hidden;
+  animation: fadeInUp 0.5s ease-out 0.75s both;
+  margin-top: 0.5rem;
 }
 
 .login-button::before {
@@ -219,72 +487,218 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.6s ease;
 }
 
-.login-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #007a80 0%, #005a5e 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 141, 147, 0.35);
-}
-
-.login-button:hover:not(:disabled)::before {
+.login-button:hover::before {
   left: 100%;
 }
 
-.login-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(0, 141, 147, 0.25);
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 141, 147, 0.4);
+  background-position: 100% 0;
+}
+
+.login-button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .login-button:disabled {
-  background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+  background: linear-gradient(135deg, rgb(156, 163, 175), rgb(209, 213, 219));
   cursor: not-allowed;
+  transform: none;
   box-shadow: none;
 }
 
-@media (max-width: 480px) {
-  .login-container {
-    padding: 15px;
-    min-height: 100vh;
+.btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-arrow {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.login-button:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================
+   ANIMACIONES GLOBALES
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET
+   ============================================ */
+@media (max-width: 1023px) {
+  .login-branding {
+    padding: 1.5rem;
   }
 
-  .login-card {
-    padding: 35px 25px;
-    border-radius: 16px;
-  }
-
-  .app-title {
-    font-size: 21px;
-  }
-
-  .company-name {
-    font-size: 11px;
-    letter-spacing: 1px;
+  .logo-bubble {
+    width: 130px;
+    height: 130px;
   }
 
   .company-logo {
+    width: 85px;
+    height: 85px;
+  }
+
+  .branding-title {
+    font-size: 1.5rem;
+  }
+
+  .card-content {
+    padding: 2rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+@media (max-width: 767px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+
+  .login-branding {
+    flex: none;
+    padding: 2rem 1.5rem;
+    min-height: 240px;
+  }
+
+  .branding-content {
+    max-width: 100%;
+  }
+
+  .logo-bubble {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 1rem;
+  }
+
+  .company-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .branding-title {
+    font-size: 1.35rem;
+  }
+
+  .branding-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .branding-dots {
+    margin-top: 1rem;
+  }
+
+  .login-form-panel {
+    flex: 1;
+    padding: 1.5rem;
+    background: linear-gradient(
+      180deg,
+      rgb(200, 238, 240) 0%,
+      rgb(218, 245, 246) 100%
+    );
+  }
+
+  .shape-1, .shape-3 {
+    opacity: 0.1;
+  }
+
+  .card-content {
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 
+      0 4px 20px rgba(0, 100, 110, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .avatar-ring {
+    width: 60px;
+    height: 60px;
+  }
+
+  .user-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL PEQUEÑO
+   ============================================ */
+@media (max-width: 479px) {
+  .login-branding {
+    min-height: 200px;
+    padding: 1.5rem 1rem;
+  }
+
+  .logo-bubble {
     width: 90px;
     height: 90px;
   }
 
-  .input-group label {
-    font-size: 16px;
+  .company-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .branding-title {
+    font-size: 1.15rem;
+  }
+
+  .login-form-panel {
+    padding: 1.25rem;
+  }
+
+  .card-content {
+    padding: 1.75rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .input-group input {
+    padding: 0.85rem 0.875rem 0.85rem 2.75rem;
+    font-size: 0.9rem;
+  }
+
+  .input-icon {
+    left: 0.875rem;
+    width: 18px;
+    height: 18px;
   }
 
   .login-button {
-    padding: 14px;
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 360px) {
-  .login-card {
-    padding: 30px 20px;
-  }
-
-  .app-title {
-    font-size: 19px;
+    padding: 0.875rem;
+    font-size: 0.95rem;
   }
 }

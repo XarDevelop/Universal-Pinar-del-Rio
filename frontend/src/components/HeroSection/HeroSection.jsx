@@ -1,27 +1,51 @@
-import './HeroSection.css'
+import { useState } from 'react';
+import './HeroSection.css';
 
-const HeroSection = () => {
+const HeroSection = ({ onMenuToggle, menuOpen }) => {
   return (
     <header className="hero-section">
       <div className="hero-content">
-        <div className="logo-container">
-          <img 
-            src="/logo_empresa.png" 
-            alt="Logo Empresa" 
-            className="logo-img"
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
-            }}
-          />
-          <div className="logo-placeholder" style={{display: 'none'}}>
-            {/* Misma ruta corregida */}
-            <img src="/logo_empresa.png" alt="" />
+        <div className="hero-left">
+          <button 
+            className={`menu-toggle ${menuOpen ? 'active' : ''}`}
+            onClick={onMenuToggle}
+            aria-label="Toggle menu"
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+          
+          <div className="hero-brand">
+            <div className="logo-wrapper">
+              <img 
+                src="/descarga.jfif" 
+                alt="Logo" 
+                className="logo-img"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.style.display = 'none';
+                }}
+              />
+              <div className="logo-fallback">
+                <img 
+                    src='/descarga.jfif'
+                    alt="Logo" 
+                    className="company-logo-header"
+            />
+              </div>
+            </div>
+            <div className="brand-text">
+              <span className="brand-name">Productos Universales Pinar del Río</span>
+              <span className="brand-divider"></span>
+              <span className="app-name">Consultor de Resoluciones</span>
+            </div>
           </div>
         </div>
-        <div className="hero-text">
-          <h1>Empresa Comercial de Servicios y Productos Universales Pinar del Río</h1>
-          <p className="app-subtitle">Consultor de Resoluciones</p>
+
+        <div className="hero-decoration">
+          <div className="deco-circle"></div>
+          <div className="deco-ring"></div>
         </div>
       </div>
     </header>

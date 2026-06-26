@@ -1,17 +1,91 @@
-.papelera{
-        margin-bottom: 10px;
-        width: 200px;
-        padding: 5px 51px;
-        height: 28px;
-        background: rgb(0, 141, 147);
-        color: white;
-        font-size: 15px;
-        border: none;
-        border-radius: 10px;
-        transition: all 0.2s ease;
-        text-decoration: none;
+/* ============================================
+   PAPELERA BUTTON
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
+.papelera {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  text-decoration: none;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 141, 147, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: buttonSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
 
-.papelera:hover{
-    background: #05317e;
+@keyframes buttonSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.papelera::before {
+  content: '🗑️';
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.papelera::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.papelera:hover::after {
+  left: 100%;
+}
+
+.papelera:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 141, 147, 0.3);
+}
+
+.papelera:hover::before {
+  transform: scale(1.2) rotate(-10deg);
+}
+
+.papelera:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .papelera {
+    width: 100%;
+    padding: 1rem;
+  }
 }

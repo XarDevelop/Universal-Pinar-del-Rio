@@ -1,41 +1,138 @@
-.representante-page {
-  min-height: 100vh;
-  background-color: #f5f5f5;
-}
-
-.representante-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background-color: #fff;
-  border-bottom: 1px solid #dee2e6;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.representante-header h1 {
-  margin: 0;
-  color: #333;
-  font-size: 24px;
-  font-weight: 600;
-}
+/* ============================================
+   PÁGINA DE REPRESENTANTE
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
 
 .representante-content {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: contentFadeIn 0.5s ease both;
 }
 
-.loading, .error {
-  text-align: center;
-  padding: 60px 20px;
-  color: #6c757d;
-  font-size: 18px;
-  flex: 1;
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.error {
-  color: #dc3545;
+/* ============================================
+   PANTALLA DE CARGA
+   ============================================ */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(
+    160deg,
+    rgb(210, 240, 242) 0%,
+    rgb(225, 248, 249) 50%,
+    rgb(218, 245, 246) 100%
+  );
+  z-index: 1000;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(0, 141, 147, 0.2);
+  border-top-color: rgb(0, 141, 147);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-screen span {
+  color: rgb(0, 120, 130);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   TOAST DE ERROR
+   ============================================ */
+
+.error-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: rgb(254, 242, 242);
+  border: 1px solid rgb(254, 202, 202);
+  border-radius: 12px;
+  color: rgb(220, 38, 38);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.15);
+  cursor: pointer;
+  animation: toastSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  z-index: 500;
+}
+
+@keyframes toastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.error-toast svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.error-toast:hover {
+  background: rgb(254, 226, 226);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .representante-content {
+    gap: 1rem;
+  }
+
+  .error-toast {
+    bottom: 5rem;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
+    animation: toastSlideUpMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes toastSlideUpMobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

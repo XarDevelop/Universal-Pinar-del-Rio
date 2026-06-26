@@ -1,28 +1,105 @@
+/* ============================================
+   BOTÓN DE LOGOUT
+   ============================================ */
+
 .logout-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 1.5rem;
-  padding: 0.75rem;
-  background: rgb(131, 130, 129);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  gap: 0.75rem;
+  width: calc(100% - 1.5rem);
+  margin: 1rem 0.75rem 0.75rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease-out 0.6s both;
+}
+
+.logout-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.logout-btn:hover::before {
+  left: 100%;
 }
 
 .logout-btn:hover {
-  background: rgb(129, 170, 140);
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: rgb(254, 202, 202);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+}
+
+.logout-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .logout-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  stroke-width: 2;
+  transition: transform 0.3s ease;
 }
 
-.logout-btn span {
-  font-weight: 500;
+.logout-btn:hover svg {
+  transform: translateX(2px);
+}
+
+/* ============================================
+   RESPONSIVE - MÓVIL
+   ============================================ */
+@media (max-width: 767px) {
+  .logout-btn {
+    width: auto;
+    margin: 0;
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    background: transparent;
+    border: none;
+  }
+
+  .logout-btn:hover {
+    background: rgba(220, 38, 38, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .logout-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

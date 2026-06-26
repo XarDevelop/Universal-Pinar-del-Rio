@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import HeroSection from '../../components/HeroSection/HeroSection';
+import Layout from '../../components/Layout/Layout';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SearchModal from '../../components/SearchModal/SearchModal';
-import SectionMenu from '../../components/SectionMenu/SectionMenu';
 import DocumentsGrid from '../../components/DocumentsGrid/DocumentsGrid';
 import PanelAdministracion from '../../components/PanelAdministracion/PanelAdministracion';
 
@@ -79,7 +78,7 @@ export default function Administrador() {
     setDocumentosFiltrados([]);
   };
 
-  // ✅ Búsqueda ahora se hace DENTRO del modal
+  // Búsqueda dentro del modal
   const handleBusquedaModal = (valor) => {
     setBusqueda(valor);
     
@@ -133,39 +132,40 @@ export default function Administrador() {
   const nombreSeccionActiva = secciones.find(s => s.id_seccion === seccionActiva)?.nombre_seccion || 'Documentos';
 
   if (loading) {
-    return <div className="loading">Cargando...</div>;
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+        <span>Cargando...</span>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <HeroSection />
-      <PanelAdministracion />
-      
-      {/* ✅ SearchBar ahora es un botón que abre el modal */}
-      <SearchBar
-        onClick={() => setMostrarModal(true)}
-        placeholder="Buscar documento..."
-      />
+    <Layout
+      sections={secciones}
+      activeSection={seccionActiva}
+      onSectionClick={handleSeccionClick}
+      onLogout={handleLogout}
+    >
+      {/* Contenido específico de Administrador */}
+      <div className="admin-content">
+        <PanelAdministracion />
+        
+        {/* SearchBar como botón que abre el modal */}
+        <SearchBar
+          onClick={() => setMostrarModal(true)}
+          placeholder="Buscar documento..."
+        />
 
-      {/* ✅ Modal con input interno y props actualizadas */}
-      <SearchModal
-        isOpen={mostrarModal}
-        onClose={() => setMostrarModal(false)}
-        searchTerm={busqueda}
-        onSearchChange={handleBusquedaModal}
-        onClear={handleLimpiarBusqueda}
-        results={documentosFiltrados}
-        onDownload={handleDescargar}
-      />
-
-      {/* Contenedor principal */}
-      <div className="main-container">
-        {/* Menú lateral */}
-        <SectionMenu
-          sections={secciones}
-          activeSection={seccionActiva}
-          onSectionClick={handleSeccionClick}
-          onLogout={handleLogout}
+        {/* Modal de búsqueda */}
+        <SearchModal
+          isOpen={mostrarModal}
+          onClose={() => setMostrarModal(false)}
+          searchTerm={busqueda}
+          onSearchChange={handleBusquedaModal}
+          onClear={handleLimpiarBusqueda}
+          results={documentosFiltrados}
+          onDownload={handleDescargar}
         />
 
         {/* Grilla de documentos */}
@@ -179,9 +179,14 @@ export default function Administrador() {
       {/* Mensaje de error global */}
       {error && (
         <div className="error-toast" onClick={() => setError('')}>
-          {error}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <span>{error}</span>
         </div>
       )}
-    </div>
+    </Layout>
   );
 }

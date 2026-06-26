@@ -1,144 +1,339 @@
+/* ============================================
+   DOCUMENT PREVIEW - PREVISUALIZACIÓN DE SUBIDA
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
 .document-preview {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  margin-top: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(0, 141, 147, 0.12);
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 520px;
+  margin: 0 auto;
+  box-shadow: 
+    0 20px 60px rgba(0, 100, 110, 0.1),
+    0 8px 24px rgba(0, 100, 110, 0.04);
+  animation: previewSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.preview-title {
-  margin: 0 0 20px 0;
-  color: #1e293b;
-  font-size: 18px;
-  font-weight: 600;
+@keyframes previewSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
+
+/* ============================================
+   TÍTULO
+   ============================================ */
+
+.preview-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  margin: 0 0 1.5rem;
+  text-align: center;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+
+.preview-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgb(0, 141, 147),
+    rgb(0, 180, 185)
+  );
+  border-radius: 2px;
+  margin: 0.75rem auto 0;
+}
+
+/* ============================================
+   PREVIEW CARD
+   ============================================ */
 
 .preview-card {
   display: flex;
-  gap: 20px;
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 141, 147, 0.04) 0%,
+    rgba(0, 180, 185, 0.04) 100%
+  );
+  border: 1.5px dashed rgba(0, 141, 147, 0.2);
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  animation: cardPulse 2s ease-in-out infinite;
+}
+
+@keyframes cardPulse {
+  0%, 100% { border-color: rgba(0, 141, 147, 0.2); }
+  50% { border-color: rgba(0, 141, 147, 0.35); }
 }
 
 .preview-icon {
-  font-size: 64px;
+  font-size: 2.5rem;
   line-height: 1;
+  flex-shrink: 0;
+  animation: iconFloat 3s ease-in-out infinite;
 }
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ============================================
+   DETALLES
+   ============================================ */
 
 .preview-details {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .detail-row {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .detail-label {
-  color: #64748b;
-  font-size: 14px;
-  min-width: 140px;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgb(100, 116, 139);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
 
 .detail-value {
-  color: #334155;
+  font-size: 0.9375rem;
   font-weight: 500;
+  color: rgb(30, 41, 59);
+  word-break: break-word;
 }
 
 .section-badge {
-  background: #dbeafe;
-  color: #1d4ed8;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 14px;
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 141, 147, 0.1);
+  color: rgb(0, 120, 130);
+  border-radius: 8px;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
 .doc-name {
-  color: #059669;
+  color: rgb(0, 141, 147);
   font-weight: 600;
 }
 
-/* Progress Bar */
+/* ============================================
+   BARRA DE PROGRESO
+   ============================================ */
+
 .upload-progress {
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.3s ease both;
 }
 
 .progress-bar {
-  flex: 1;
   height: 8px;
-  background: #e2e8f0;
-  border-radius: 4px;
+  background: rgba(226, 232, 240, 0.6);
+  border-radius: 100px;
   overflow: hidden;
+  margin-bottom: 0.5rem;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #22c55e);
+  background: linear-gradient(
+    90deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 50%,
+    rgb(0, 180, 185) 100%
+  );
+  border-radius: 100px;
   transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .progress-text {
-  font-size: 14px;
-  color: #64748b;
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
   font-weight: 600;
-  min-width: 40px;
+  color: rgb(0, 141, 147);
 }
 
-/* Actions */
+/* ============================================
+   ACCIONES
+   ============================================ */
+
 .preview-actions {
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 20px;
+  gap: 1rem;
+}
+
+.btn-cancel,
+.btn-confirm {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  border-radius: 14px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-cancel {
-  padding: 12px 24px;
-  border: 1px solid #e2e8f0;
-  background: white;
-  color: #64748b;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
+  background: rgba(241, 245, 249, 0.8);
+  border: 1.5px solid rgba(226, 232, 240, 0.8);
+  color: rgb(100, 116, 139);
 }
 
 .btn-cancel:hover:not(:disabled) {
-  background: #f1f5f9;
-  color: #475569;
+  background: rgb(254, 242, 242);
+  border-color: rgb(254, 202, 202);
+  color: rgb(220, 38, 38);
+  transform: translateY(-1px);
 }
 
 .btn-confirm {
-  padding: 12px 24px;
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
   border: none;
-  background: #22c55e;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 141, 147, 0.2);
+}
+
+.btn-confirm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-confirm:hover::before {
+  left: 100%;
 }
 
 .btn-confirm:hover:not(:disabled) {
-  background: #16a34a;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 141, 147, 0.3);
 }
 
-.btn-confirm:disabled,
-.btn-cancel:disabled {
+.btn-confirm:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-cancel:disabled,
+.btn-confirm:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .document-preview {
+    padding: 1.5rem;
+    border-radius: 20px;
+    margin: 0 1rem;
+  }
+
+  .preview-title {
+    font-size: 1.125rem;
+  }
+
+  .preview-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .preview-icon {
+    font-size: 2rem;
+  }
+
+  .preview-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  .document-preview {
+    padding: 1.25rem;
+    margin: 0 0.5rem;
+  }
+
+  .detail-label {
+    font-size: 0.75rem;
+  }
+
+  .detail-value {
+    font-size: 0.875rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

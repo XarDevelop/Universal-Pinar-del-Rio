@@ -1,63 +1,170 @@
-.panel-representante {
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* ============================================
+   PANEL DE REPRESENTANTE
+   Color corporativo: rgb(0, 141, 147)
+   ============================================ */
+
+.representante-section {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  animation: sectionFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.panel-representante h3 {
-  margin: 0 0 15px 0;
-  color: #333;
-  font-size: 18px;
-  font-weight: 600;
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.panel-botones {
+.representante-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(15, 23, 42);
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.representante-section h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(
+    180deg,
+    rgb(0, 141, 147) 0%,
+    rgb(0, 180, 185) 100%
+  );
+  border-radius: 4px;
+}
+
+/* ============================================
+   FILA DE BOTONES
+   ============================================ */
+
+.buttons-row {
   display: flex;
-  gap: 15px;
   flex-wrap: wrap;
-}
-
-.btn-agregar {
-  padding: 12px 24px;
-  background:rgb(0, 141, 147);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.3s;
-  display: flex;
+  gap: 0.75rem;
   align-items: center;
-  gap: 8px;
 }
 
-.btn-agregar:hover {
-  background-color: #194ce4;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
+/* ============================================
+   BOTÓN ADMINISTRATIVO
+   ============================================ */
 
-.btn-desechar {
-  padding: 12px 24px;
-  background-color: rgb(131,130,129);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.3s;
-  display: flex;
+.admin-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(0, 141, 147, 0.15);
+  border-radius: 14px;
+  color: rgb(0, 120, 130);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 16px rgba(0, 100, 110, 0.06),
+    0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
-.btn-desechar:hover {
-  background-color: rgb(129, 170, 140);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+.admin-btn:hover {
+  border-color: rgba(0, 141, 147, 0.3);
+  color: rgb(0, 141, 147);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 8px 24px rgba(0, 141, 147, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.admin-btn.active {
+  background: linear-gradient(
+    135deg,
+    rgb(0, 120, 130) 0%,
+    rgb(0, 141, 147) 100%
+  );
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(0, 141, 147, 0.25);
+}
+
+/* Botón peligro - naranja/rojo */
+.btn-danger {
+  color: rgb(234, 88, 12);
+  border-color: rgba(234, 88, 12, 0.15);
+}
+
+.btn-danger:hover {
+  color: rgb(234, 88, 12);
+  border-color: rgba(234, 88, 12, 0.3);
+  box-shadow: 
+    0 8px 24px rgba(234, 88, 12, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-danger.active {
+  background: linear-gradient(
+    135deg,
+    rgb(220, 38, 38) 0%,
+    rgb(239, 68, 68) 100%
+  );
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25);
+}
+
+/* ============================================
+   WRAPPER DEL MODAL - FADE SUAVE
+   ============================================ */
+
+.modal-wrapper {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: 
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    margin 0.3s ease;
+  margin: 0;
+}
+
+.modal-wrapper.visible {
+  max-height: 800px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+  .representante-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .representante-section h2 {
+    font-size: 1.125rem;
+  }
+
+  .buttons-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-btn {
+    width: 100%;
+  }
 }
